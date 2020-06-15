@@ -282,87 +282,89 @@ namespace NetCasbin
                 matcherMap[expString] = expression;
             }
 
-            if (policyLen != 0)
-            {
-                policyEffects = new Effect.Effect[policyLen];
-                matcherResults = new float[policyLen];
-                for (var i = 0; i < policyLen; i++)
-                {
-                    var pvals = model.Model["p"]["p"].Policy[i];
-                    if (rTokensLen != rvals.Length)
-                    {
-                        throw new Exception($"invalid request size: expected {rTokensLen}, got {rvals.Length}, rvals: ${rvals}");
-                    }
-                    var parameters = GetParameters(rvals, pvals);
-                    result = expression.Invoke(parameters);
-                    if (result is bool)
-                    {
-                        if (!(bool)result)
-                        {
-                            policyEffects[i] = Effect.Effect.Indeterminate;
-                            continue;
-                        }
-                    }
-                    else if (result is float)
-                    {
-                        if ((float)result == 0)
-                        {
-                            policyEffects[i] = Effect.Effect.Indeterminate;
-                            continue;
-                        }
-                        else
-                        {
-                            matcherResults[i] = (float)result;
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("matcher result should be bool, int or float");
-                    }
+            //if (policyLen != 0)
+            //{
+            //    policyEffects = new Effect.Effect[policyLen];
+            //    matcherResults = new float[policyLen];
+            //    for (var i = 0; i < policyLen; i++)
+            //    {
+            //        var pvals = model.Model["p"]["p"].Policy[i];
+            //        if (rTokensLen != rvals.Length)
+            //        {
+            //            throw new Exception($"invalid request size: expected {rTokensLen}, got {rvals.Length}, rvals: ${rvals}");
+            //        }
+            //        var parameters = GetParameters(rvals, pvals);
+            //        result = expression.Invoke(parameters);
+            //        if (result is bool)
+            //        {
+            //            if (!(bool)result)
+            //            {
+            //                policyEffects[i] = Effect.Effect.Indeterminate;
+            //                continue;
+            //            }
+            //        }
+            //        else if (result is float)
+            //        {
+            //            if ((float)result == 0)
+            //            {
+            //                policyEffects[i] = Effect.Effect.Indeterminate;
+            //                continue;
+            //            }
+            //            else
+            //            {
+            //                matcherResults[i] = (float)result;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            throw new Exception("matcher result should be bool, int or float");
+            //        }
 
-                    if (parameters.Any(x => x.Name == "p_eft"))
-                    {
-                        var policyEft = parameters.FirstOrDefault(x => x.Name == "p_eft")?.Value as string;
-                        switch (policyEft)
-                        {
-                            case "allow":
-                                policyEffects[i] = Effect.Effect.Allow;
-                                break;
-                            case "deny":
-                                policyEffects[i] = Effect.Effect.Deny;
-                                break;
-                            default:
-                                policyEffects[i] = Effect.Effect.Indeterminate;
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        policyEffects[i] = Effect.Effect.Allow;
-                    }
+            //        if (parameters.Any(x => x.Name == "p_eft"))
+            //        {
+            //            var policyEft = parameters.FirstOrDefault(x => x.Name == "p_eft")?.Value as string;
+            //            switch (policyEft)
+            //            {
+            //                case "allow":
+            //                    policyEffects[i] = Effect.Effect.Allow;
+            //                    break;
+            //                case "deny":
+            //                    policyEffects[i] = Effect.Effect.Deny;
+            //                    break;
+            //                default:
+            //                    policyEffects[i] = Effect.Effect.Indeterminate;
+            //                    break;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            policyEffects[i] = Effect.Effect.Allow;
+            //        }
 
-                    if (effect.Equals("priority(p_eft) || deny"))
-                    {
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                policyEffects = new Effect.Effect[1];
-                matcherResults = new float[1];
-                result = expression.Invoke(GetParameters(rvals));
-                if ((bool)result)
-                {
-                    policyEffects[0] = Effect.Effect.Allow;
-                }
-                else
-                {
-                    policyEffects[0] = Effect.Effect.Indeterminate;
-                }
-            }
-            result = eft.MergeEffects(effect, policyEffects, matcherResults);
-            return (bool)result;
+            //        if (effect.Equals("priority(p_eft) || deny"))
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    policyEffects = new Effect.Effect[1];
+            //    matcherResults = new float[1];
+            //    result = expression.Invoke(GetParameters(rvals));
+            //    if ((bool)result)
+            //    {
+            //        policyEffects[0] = Effect.Effect.Allow;
+            //    }
+            //    else
+            //    {
+            //        policyEffects[0] = Effect.Effect.Indeterminate;
+            //    }
+            //}
+            //result = eft.MergeEffects(effect, policyEffects, matcherResults);
+            //return (bool)result;
+
+            return false;
         }
 
         /// <summary>

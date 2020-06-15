@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetCasbin.Model;
+using System;
 using System.Collections.Generic;
 
 namespace NetCasbin
@@ -42,7 +43,7 @@ namespace NetCasbin
                 }
             }
 
-            var ruleAdded = model.AddPolicy(sec, ptype, rule);
+            var ruleAdded = model.AddPolicy(sec, ptype, rule as Rule);
             return ruleAdded;
         }
 
@@ -75,7 +76,7 @@ namespace NetCasbin
                 }
             }
 
-            var ruleRemoved = model.RemovePolicy(sec, ptype, rule);
+            var ruleRemoved = model.RemovePolicy(sec, ptype, rule as Rule);
             return ruleRemoved;
         }
 

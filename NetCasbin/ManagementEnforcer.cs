@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NetCasbin.Model;
 
 namespace NetCasbin
 {
@@ -119,7 +120,7 @@ namespace NetCasbin
         /// gets all the authorization rules in the policy.
         /// </summary>
         /// <returns> all the "p" policy rules.</returns>
-        public List<List<string>> GetPolicy()
+        public HashSet<Rule> GetPolicy()
         {
             return GetNamedPolicy("p");
         }
@@ -141,7 +142,7 @@ namespace NetCasbin
         /// </summary>
         /// <param name="ptype">the policy type, can be "p", "p2", "p3", ..</param>
         /// <returns>the "p" policy rules of the specified ptype.</returns>
-        public List<List<string>> GetNamedPolicy(string ptype)
+        public HashSet<Rule> GetNamedPolicy(string ptype)
         {
             return model.GetPolicy("p", ptype);
         }
@@ -162,7 +163,7 @@ namespace NetCasbin
         /// gets all the role inheritance rules in the policy.
         /// </summary>
         /// <returns>all the "g" policy rules.</returns>
-        public List<List<string>> GetGroupingPolicy()
+        public HashSet<Rule> GetGroupingPolicy()
         {
             return GetNamedGroupingPolicy("g");
         }
@@ -183,7 +184,7 @@ namespace NetCasbin
         /// </summary>
         /// <param name="ptype">the policy type, can be "g", "g2", "g3", ..</param>
         /// <returns>the "g" policy rules of the specified ptype.</returns>
-        public List<List<string>> GetNamedGroupingPolicy(string ptype)
+        public HashSet<Rule> GetNamedGroupingPolicy(string ptype)
         {
             return model.GetPolicy("g", ptype);
         }

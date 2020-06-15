@@ -27,7 +27,7 @@ namespace NetCasbin.Model
             {
                 foreach (var ast in Model["p"].Values)
                 {
-                    ast.Policy = new List<List<string>>();
+                    ast.Policy = new HashSet<Rule>();
                 }
             }
 
@@ -35,12 +35,12 @@ namespace NetCasbin.Model
             {
                 foreach (var ast in Model["p"].Values)
                 {
-                    ast.Policy = new List<List<string>>();
+                    ast.Policy = new HashSet<Rule>();
                 }
             }
         }
 
-        public List<List<string>> GetPolicy(string sec, string ptype)
+        public HashSet<Rule> GetPolicy(string sec, string ptype)
         {
             return Model[sec][ptype].Policy;
         }
@@ -73,10 +73,10 @@ namespace NetCasbin.Model
 
         public bool HasPolicy(string sec, string ptype, List<string> rule)
         {
-            return Model[sec][ptype]!=null && Model[sec][ptype].Policy.Any(x => Utility.ArrayEquals(rule, x));
+            return Model[sec][ptype] != null && Model[sec][ptype].Policy.Contains(rule);
         }
 
-        public bool AddPolicy(string sec, string ptype, List<string> rule)
+        public bool AddPolicy(string sec, string ptype, Rule rule)
         {
             if (!HasPolicy(sec, ptype, rule))
             {
@@ -86,23 +86,29 @@ namespace NetCasbin.Model
             return false;
         }
 
-        public bool RemovePolicy(string sec, string ptype, List<string> rule)
+        public bool RemovePolicy(string sec, string ptype,Rule rule)
         {
-            for (var i = 0; i < Model[sec][ptype].Policy.Count; i++)
+            //for (var i = 0; i < Model[sec][ptype].Policy.Count; i++)
+            //{
+            //    var r = Model[sec][ptype].Policy[i];
+            //    if (Utility.ArrayEquals(rule, r))
+            //    {
+            //        Model[sec][ptype].Policy.RemoveAt(i);
+            //        return true;
+            //    }
+            //}
+            var policy = Model[sec][ptype].Policy;
+            if (policy.Contains(rule))
             {
-                var r = Model[sec][ptype].Policy[i];
-                if (Utility.ArrayEquals(rule, r))
-                {
-                    Model[sec][ptype].Policy.RemoveAt(i);
-                    return true;
-                }
+                policy.Remove(rule);
+                return true;
             }
             return false;
         }
 
         public bool RemoveFilteredPolicy(string sec, string ptype, int fieldIndex, params string[] fieldValues)
         {
-            var tmp = new List<List<string>>();
+            var tmp = new HashSet<Rule>();
             var res = false;
 
             foreach (var rule in Model[sec][ptype].Policy)

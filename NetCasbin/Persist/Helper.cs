@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetCasbin.Model;
+using System;
 using System.Linq;
 
 namespace NetCasbin.Persist
@@ -33,7 +34,7 @@ namespace NetCasbin.Persist
                     return;
                 }
 
-                var content = tokens.Skip(1).ToList();
+                var content = tokens.Skip(1).ToList() as Rule;
                 if (!model.HasPolicy(sec, key, content))
                 {
                     policy.Policy.Add(content);

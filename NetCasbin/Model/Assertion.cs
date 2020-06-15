@@ -16,13 +16,13 @@ namespace NetCasbin.Model
 
         public string[] Tokens { set; get; }
 
-        private List<List<string>> _policy;
+        private HashSet<Rule> _policy;
 
         private IRoleManager _rm;
 
         public IRoleManager RM => _rm;
 
-        public List<List<string>> Policy
+        public HashSet<Rule> Policy
         {
             set => _policy = value;
             get => _policy;
@@ -30,7 +30,7 @@ namespace NetCasbin.Model
 
         public Assertion()
         {
-            _policy = new List<List<string>>();
+            _policy = new HashSet<Rule>();
             _rm = new DefaultRoleManager(0);
         }
 
