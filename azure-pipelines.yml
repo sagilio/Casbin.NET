@@ -44,6 +44,10 @@ stages:
           command: 'test'
           arguments: '-c $(buildConfiguration) --no-build'
 
+      - script: |
+          export VersionTag=“v”${GitVersion.NuGetVersionV2}
+          echo ${VersionTag}
+
       - task: DotNetCoreCLI@2
         displayName: Pack packages
         inputs:
@@ -53,13 +57,6 @@ stages:
           versioningScheme: 'byEnvVar'
           versionEnvVar: 'GitVersion.NuGetVersionV2'
           verbosityPack: 'Minimal'
-
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            VersionTag = “v”${GitVersion.NuGetVersionV2}
-            echo ${VersionTag}
 
       - task: PublishBuildArtifacts@1
         displayName: Push packages to drop
