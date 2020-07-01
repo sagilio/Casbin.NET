@@ -54,6 +54,13 @@ stages:
           versionEnvVar: 'GitVersion.NuGetVersionV2'
           verbosityPack: 'Minimal'
 
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            VersionTag = v$(NuGetVersionV2)
+            echo ${VersionTag}
+
       - task: PublishBuildArtifacts@1
         displayName: Push packages to drop
         inputs:
