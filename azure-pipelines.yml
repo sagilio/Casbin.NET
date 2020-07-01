@@ -58,7 +58,7 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-            VersionTag = v$(NuGetVersionV2)
+            VersionTag = “v”${GitVersion.NuGetVersionV2}
             echo ${VersionTag}
 
       - task: PublishBuildArtifacts@1
