@@ -48,7 +48,14 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-            export VersionTag=“v”${GitVersion.NuGetVersionV2}
+            echo ${GitVersion.NuGetVersionV2}
+            export VersionTag="v"${GitVersion.NuGetVersionV2}
+            echo ${VersionTag}
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
             echo ${VersionTag}
 
       - task: DotNetCoreCLI@2
