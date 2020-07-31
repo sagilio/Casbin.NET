@@ -33,6 +33,14 @@ jobs:
     - name: Pack
       run: dotnet pack -c Release -o publish --no-build
 
+    - name: Run Semantic Release
+      run: |
+        $Env:path = $Env:Path + (yarn global bin)
+        yarn global add semantic-release
+        semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Push
       run: |
         dotnet nuget add source https://nuget.pkg.github.com/casbin/index.json -n github -u casbin -p ${{ secrets.GITHUB_TOKEN }}
