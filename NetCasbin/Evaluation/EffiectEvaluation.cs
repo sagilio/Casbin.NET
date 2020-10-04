@@ -11,7 +11,6 @@ namespace NetCasbin.Evaluation
             {
                 case PolicyEffectType.AllowOverride:
                 {
-                    result = false;
                     if (effect is Effect.Effect.Allow)
                     {
                         result = true;

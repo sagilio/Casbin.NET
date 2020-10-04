@@ -52,6 +52,7 @@
             public const string AllowOverride = "some(where (p_eft == allow))";
             public const string DenyOverride = "!some(where (p_eft == deny))";
             public const string AllowAndDeny = "some(where (p_eft == allow)) && !some(where (p_eft == deny))";
+            public const string AllowOrDeny = "some(where (p_eft == allow)) || !some(where (p_eft == deny))";
             public const string Priority = "priority(p_eft) || deny";
         }
     }

@@ -4,8 +4,9 @@
     {
         Custom,
         AllowOverride,
-        AllowAndDeny,
         DenyOverride,
+        AllowAndDeny,
+        AllowOrDeny,
         Priority
     }
 }
