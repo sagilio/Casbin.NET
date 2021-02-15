@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NetCasbin.Abstractions;
@@ -983,9 +984,19 @@ namespace NetCasbin
         /// </summary>
         /// <param name="name">The name of the new function.</param>
         /// <param name="function">The function.</param>
-        public void AddFunction(string name, AbstractFunction function)
+        public void AddFunction(string name, Delegate function)
         {
             ExpressionHandler.SetFunction(name, function);
+        }
+
+        /// <summary>
+        /// Adds a customized function.
+        /// </summary>
+        /// <param name="name">The name of the new function.</param>
+        /// <param name="function">The function.</param>
+        public void AddFunction(string name, Func<string, string, bool> function)
+        {
+            AddFunction(name, (Delegate) function);
         }
     }
 }
