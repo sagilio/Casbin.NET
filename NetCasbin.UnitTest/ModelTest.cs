@@ -564,7 +564,6 @@ namespace NetCasbin.UnitTest
         public void TestModelWithCommaAndQuotations()
         {
             var e = new Enforcer(_testModelFixture.GetNewCommaAndQuotationsModel());
-            e.BuildRoleLinks();
 
             TestEnforce(e, "alice", "Comma,Test", "Get", true);
             TestEnforce(e, "alice", "Comma,Test", "Post", false);
@@ -573,10 +572,10 @@ namespace NetCasbin.UnitTest
             TestEnforce(e, "bob", "\"Comma\",\"Quotations\",Test", "Post", false);
             TestEnforce(e, "bob", "\"\"Comma\"\",\"\"Quotations\"\",Test", "Get", false);
             TestEnforce(e, "bob", "\"\"\"Comma\"\",\"\"Quotations\"\",Test\"", "Get", false);
-            TestEnforce(e, "cindy", "\"\"\"Muti Quotations Test\"", "Get", true);
-            TestEnforce(e, "cindy", "\"\"\"Muti Quotations Test\"", "Post", false);
-            TestEnforce(e, "cindy", "\"\"Muti Quotations Test\"", "Get", false);
+            TestEnforce(e, "cindy", "\"Muti Quotations Test", "Get", true);
+            TestEnforce(e, "cindy", "\"Muti Quotations Test", "Post", false);
             TestEnforce(e, "cindy", "\"\"Muti Quotations Test", "Get", false);
+            TestEnforce(e, "cindy", "\"\"Muti Quotations Test\"", "Get", false);
         }
         public class TestResource
         {
